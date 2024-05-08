@@ -1,0 +1,82 @@
+library(ggplot2)
+library(tidyr)
+
+Hours <- c(0,24,48,72,96,120)
+Conc1 <- c(0,0.1425,	2.03,	1.9665,	1.969,2.05)
+Conc2 <- c(0,0.1525,	2.15,	2.09,	2.114,2.08)
+Conc3 <- c(0,0.119,	1.3775,	2.24,	2.21855,2.15)
+Conc4 <- c(0,0.12,	0.34,	2.155	,2.22755,2.18)
+
+# Create a data frame with Hours, Conc1, Conc2, Conc3, Conc4
+data <- data.frame(Hours, Conc1, Conc2, Conc3, Conc4)
+
+# Reshape the data from wide to long format for ggplot
+data_long <- pivot_longer(data, -Hours, names_to = "Concentration", values_to = "OD600")
+
+renkler <- c(c("#00D9D2", "#39B185", "#8CCB86", "#E9E29C", "#EEBA79", "#E88471", "#CF597E"))
+# Plot using ggplot2
+ggplot(data_long, aes(x = Hours, y = OD600, color = Concentration)) +
+  geom_line(size = 1) +
+  labs(x = "Time (Hours)", y = "Average OD600", title = "Growth Curve Under Different Salt Concentrations") +
+  scale_color_manual(values = c("#00D9D2", "#EEBA79", "#39B185", "#E88471")) +
+  theme_minimal() +
+  theme(legend.position = "bottom", legend.title = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(color = guide_legend(title = "Salt Concentration"))
+
+### Tuz deneyi ikinci deneme
+Hours <- c(0,24,48,72,96,120)
+Salt1 <- c(0,2.2802, 2.35, 2.1807, 2.0876,1.9001)
+Salt2 <- c(0,2.2802,2.23,2.1887,2.1648,2.126)
+Salt3 <- c(0,2.1807,  2.23, 2.1971, 2.0813,1.970)
+Salt4 <- c(0,2.1279,2.14, 2.1279, 2.1210,1.9948)
+
+data <- data.frame(Hours, Salt1, Salt2, Salt3, Salt4)
+data_long <- pivot_longer(data, -Hours, names_to = "Concentration", values_to = "OD600")
+
+ggplot(data_long, aes(x = Hours, y = OD600, color = Concentration)) +
+  geom_point()+
+  geom_line(size = 1) +
+  labs(x = "Time (Hours)", y = "Average OD600", title = "Growth Curve Under Different Salt Concentrations") +
+  scale_color_manual(values = c("#00D9D2", "#EEBA79", "#39B185", "#E88471")) +
+  theme_minimal() +
+  theme(legend.position = "bottom", legend.title = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  guides(color = guide_legend(title = "Salt Concentration"))
+
+###
+
+
+# Assuming you have the necessary packages installed
+library(ggplot2)
+library(tidyr)
+
+Hours <- c(0,24,48,72,96,120)
+Salt1 <- c(0,2.2802, 2.35, 2.1807, 2.0876,1.9001)
+Salt2 <- c(0,2.2802,2.23,2.1887,2.1648,2.126)
+Salt3 <- c(0,2.1807,  2.23, 2.1971, 2.0813,1.970)
+Salt4 <- c(0,2.1279,2.14, 2.1279, 2.1210,1.9948)
+
+data <- data.frame(Hours, Salt1, Salt2, Salt3, Salt4)
+data_long <- pivot_longer(data, -Hours, names_to = "Concentration", values_to = "OD600")
+
+# Define the shapes and line types
+shapes <- c(16, 17, 18, 19)
+linetypes <- c("solid", "dashed", "dotted", "twodash")
+
+ggplot(data_long, aes(x = Hours, y = OD600, color = Concentration)) +
+  geom_point(aes(shape = Concentration)) +  # This adds the scatter plot with different shapes
+  geom_line(aes(linetype = Concentration), size = 1) +  # This adds the line plot with different line types
+  scale_shape_manual(values = shapes) +  # This sets the shapes
+  scale_linetype_manual(values = linetypes) +  # This sets the line types
+  labs(x = "Time (Hours)", y = "Average OD600", title = "Growth Curve Under Different Salt Concentrations") +
+  theme_minimal() +
+  theme(legend.position = "bottom", legend.title = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
