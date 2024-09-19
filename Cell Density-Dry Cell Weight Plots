@@ -1,0 +1,48 @@
+# Required libraries
+library(ggplot2)
+
+# Sample data creation (replace with your own data)
+time_points <- c(24, 48, 72, 96, 120)
+
+# Sample means and standard deviations (replace with your actual data)
+mean_dry_weight_salt25 <- c(0.0067, 0.0109, 0.0095, 0.008333, 0.006667)
+sd_dry_weight_salt25 <- c(0.006966, 0.002816, 0.00052, 0.000404, 0.000306)
+mean_dry_weight_salt25 <- (mean_dry_weight_salt25 / 2) * 1000
+mean_cell_density_salt25 <- c(1.515967, 2.156867, 2.097667, 2.005233, 1.889333)
+sd_cell_density_salt25 <- c(1.194946, 0.172045, 0.112217, 0.071503, 0.166312)
+
+# Create data frames for ggplot
+data <- data.frame(time = time_points, 
+                   cell_density_mean = mean_cell_density_salt25, 
+                   cell_density_sd = sd_cell_density_salt25,
+                   dry_weight_mean = mean_dry_weight_salt25,
+                   dry_weight_sd = sd_dry_weight_salt25)
+
+# Plotting
+ggplot(data, aes(x = time)) + 
+  # Line plot for cell density with error bars
+  geom_line(aes(y = cell_density_mean, color = "Cell Density"), size = 1) +
+  geom_errorbar(aes(ymin = cell_density_mean - cell_density_sd, ymax = cell_density_mean + cell_density_sd, color = "Cell Density"), width = 5) +
+  geom_point(aes(y = cell_density_mean, color = "Cell Density")) +
+  
+  # Bar plot for dry cell weight with error bars
+  geom_bar(aes(y = dry_weight_mean, fill = "Dry Cell Weight"), stat = "identity", width = 10, alpha = 0.5) +
+  geom_errorbar(aes(ymin = (dry_weight_mean - dry_weight_sd), ymax = (dry_weight_mean + dry_weight_sd), fill = "Dry Cell Weight"), width = 5, alpha = 0.5) +
+  
+  # Axis labels and plot theme
+  labs(x = "Time (hours)", 
+       y = "Cell Density (OD600)", 
+       fill = "Dry Cell Weight", 
+       color = "Cell Density") +
+  scale_y_continuous(sec.axis = sec_axis(~./1, name = "Dry Cell Weight (g/L)")) +
+  
+  # Manually set the colors for line and bar plots
+  scale_color_manual(values = c("Cell Density" = "blue4")) +
+  scale_fill_manual(values = c("Dry Cell Weight" = "yellow4")) +
+  
+  # Add title (optional)
+  ggtitle("2.5g/L NaCl Cell Density and Dry Cell Weight Over Time") +
+  
+  # Theme adjustments
+  theme_minimal() +
+  theme(legend.position = "top")
