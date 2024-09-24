@@ -1,0 +1,380 @@
+# Required libraries
+library(ggplot2)
+
+# Sample data creation (replace with your own data)
+time_points <- c(24, 48, 72, 96, 120)
+
+# Sample means and standard deviations (replace with your actual data)
+mean_dry_weight_salt25 <- c(0.0067, 0.0109, 0.0095, 0.008333, 0.006667)
+sd_dry_weight_salt25 <- c(0.006966, 0.002816, 0.00052, 0.000404, 0.000306)
+mean_dry_weight_salt25 <- (mean_dry_weight_salt25 / 2) * 1000
+mean_cell_density_salt25 <- c(1.515967, 2.156867, 2.097667, 2.005233, 1.889333)
+sd_cell_density_salt25 <- c(1.194946, 0.172045, 0.112217, 0.071503, 0.166312)
+
+# Create data frames for ggplot
+data <- data.frame(time = time_points, 
+                   cell_density_mean = mean_cell_density_salt25, 
+                   cell_density_sd = sd_cell_density_salt25,
+                   dry_weight_mean = mean_dry_weight_salt25,
+                   dry_weight_sd = sd_dry_weight_salt25)
+
+# Plotting
+ggplot(data, aes(x = time)) + 
+  # Line plot for cell density with error bars
+  geom_line(aes(y = cell_density_mean, color = "Cell Density"), size = 1) +
+  geom_errorbar(aes(ymin = cell_density_mean - cell_density_sd, ymax = cell_density_mean + cell_density_sd, color = "Cell Density"), width = 5) +
+  geom_point(aes(y = cell_density_mean, color = "Cell Density")) +
+  
+  # Bar plot for dry cell weight with error bars
+  geom_bar(aes(y = dry_weight_mean, fill = "Dry Cell Weight"), stat = "identity", width = 10, alpha = 0.5) +
+  geom_errorbar(aes(ymin = (dry_weight_mean - dry_weight_sd), ymax = (dry_weight_mean + dry_weight_sd), fill = "Dry Cell Weight"), width = 5, alpha = 0.5) +
+  
+  # Axis labels and plot theme
+  labs(x = "Time (hours)", 
+       y = "Cell Density (OD600)", 
+       fill = "Dry Cell Weight", 
+       color = "Cell Density") +
+  scale_y_continuous(
+    sec.axis = sec_axis(~./1, name = "Dry Cell Weight (g/L)", breaks = seq(0, 7, by = 1)), 
+    limits = c(0, 7), 
+    breaks = seq(0, 7, by = 1)  # Set y-axis intervals for cell density
+  ) +
+  
+  # Set x-axis limits and breaks
+  scale_x_continuous(breaks = c(24, 48, 72, 96, 120)) +
+  
+  # Manually set the colors for line and bar plots
+  scale_color_manual(values = c("Cell Density" = "#003366")) +
+  scale_fill_manual(values = c("Dry Cell Weight" = "#FFC325")) +
+  
+  # Add title (optional)
+  ggtitle("2.5g/L NaCl Cell Density and Dry Cell Weight Over Time") +
+  
+  # Theme adjustments
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),  # Remove major grid lines
+    panel.grid.minor = element_blank(),  # Remove minor grid lines
+    panel.background = element_blank(),  # Remove background color
+    legend.position = "top"
+  )
+
+
+
+
+
+## 25 to 45
+time_points <- c(24, 48, 72, 96, 120)
+
+mean_dry_weight_salt25to45 <- c(5.016667, 6.033333,4.983333333 , 5.25, 4.433333333)
+sd_dry_weight_salt25to45 <- c(0.007537462, 0.002569695, 0.000602771, 0.0014, 0.000251661)
+mean_cell_density_salt25to45 <- c(1.514733333, 2.1799, 2.137933333, 2.113566667, 2.083566667)
+sd_cell_density_salt25to45 <- c(1.184811552, 0.043692448, 0.049410964, 0.050751388, 0.074713876)
+
+
+data <- data.frame(time = time_points, 
+                   cell_density_mean = mean_cell_density_salt25to45, 
+                   cell_density_sd = sd_cell_density_salt25to45,
+                   dry_weight_mean = mean_dry_weight_salt25to45,
+                   dry_weight_sd = sd_dry_weight_salt25to45)
+
+
+# Plotting
+ggplot(data, aes(x = time)) + 
+  # Line plot for cell density with error bars
+  geom_line(aes(y = cell_density_mean, color = "Cell Density"), size = 1) +
+  geom_errorbar(aes(ymin = cell_density_mean - cell_density_sd, ymax = cell_density_mean + cell_density_sd, color = "Cell Density"), width = 5) +
+  geom_point(aes(y = cell_density_mean, color = "Cell Density")) +
+  
+  # Bar plot for dry cell weight with error bars
+  geom_bar(aes(y = dry_weight_mean, fill = "Dry Cell Weight"), stat = "identity", width = 10, alpha = 0.5) +
+  geom_errorbar(aes(ymin = (dry_weight_mean - dry_weight_sd), ymax = (dry_weight_mean + dry_weight_sd), fill = "Dry Cell Weight"), width = 5, alpha = 0.5) +
+  
+  # Axis labels and plot theme
+  labs(x = "Time (hours)", 
+       y = "Cell Density (OD600)", 
+       fill = "Dry Cell Weight", 
+       color = "Cell Density") +
+  scale_y_continuous(
+    sec.axis = sec_axis(~./1, name = "Dry Cell Weight (g/L)", breaks = seq(0, 7, by = 1)), 
+    limits = c(0, 7), 
+    breaks = seq(0, 7, by = 1)  # Set y-axis intervals for cell density
+  ) +
+  
+  # Set x-axis limits and breaks
+  scale_x_continuous(breaks = c(24, 48, 72, 96, 120)) +
+  
+  # Manually set the colors for line and bar plots
+  scale_color_manual(values = c("Cell Density" = "#003366")) +
+  scale_fill_manual(values = c("Dry Cell Weight" = "#FFC325")) +
+  
+  # Add title (optional)
+  ggtitle("2.5g/L to 4.5g/L NaCl Cell Density and Dry Cell Weight Over Time") +
+  
+  # Theme adjustments
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),  # Remove major grid lines
+    panel.grid.minor = element_blank(),  # Remove minor grid lines
+    panel.background = element_blank(),  # Remove background color
+    legend.position = "top"
+  )
+
+
+
+
+
+
+### 35gL NaCl
+
+time_points <- c(24, 48, 72, 96, 120)
+
+mean_dry_weight_salt35 <- c(3.6, 4.466666667,5.716666667 , 4.9, 4.133333333)
+sd_dry_weight_salt35 <- c(0.004779121, 0.003317127, 0.001301281, 0.00034641, 0.000416333)
+mean_cell_density_salt35 <- c(1.442733333, 1.9024, 2.203266667, 2.1144, 2.0155)
+sd_cell_density_salt35 <- c(1.148078901, 0.465142215, 0.034071151, 0.096410114, 0.118493671)
+
+
+data <- data.frame(time = time_points, 
+                   cell_density_mean = mean_cell_density_salt35, 
+                   cell_density_sd = sd_cell_density_salt35,
+                   dry_weight_mean = mean_dry_weight_salt35,
+                   dry_weight_sd = sd_dry_weight_salt35)
+
+
+# Plotting
+ggplot(data, aes(x = time)) + 
+  # Line plot for cell density with error bars
+  geom_line(aes(y = cell_density_mean, color = "Cell Density"), size = 1) +
+  geom_errorbar(aes(ymin = cell_density_mean - cell_density_sd, ymax = cell_density_mean + cell_density_sd, color = "Cell Density"), width = 5) +
+  geom_point(aes(y = cell_density_mean, color = "Cell Density")) +
+  
+  # Bar plot for dry cell weight with error bars
+  geom_bar(aes(y = dry_weight_mean, fill = "Dry Cell Weight"), stat = "identity", width = 10, alpha = 0.5) +
+  geom_errorbar(aes(ymin = (dry_weight_mean - dry_weight_sd), ymax = (dry_weight_mean + dry_weight_sd), fill = "Dry Cell Weight"), width = 5, alpha = 0.5) +
+  
+  # Axis labels and plot theme
+  labs(x = "Time (hours)", 
+       y = "Cell Density (OD600)", 
+       fill = "Dry Cell Weight", 
+       color = "Cell Density") +
+  scale_y_continuous(
+    sec.axis = sec_axis(~./1, name = "Dry Cell Weight (g/L)", breaks = seq(0, 7, by = 1)), 
+    limits = c(0, 7), 
+    breaks = seq(0, 7, by = 1)  # Set y-axis intervals for cell density
+  ) +
+  
+  # Set x-axis limits and breaks
+  scale_x_continuous(breaks = c(24, 48, 72, 96, 120)) +
+  
+  # Manually set the colors for line and bar plots
+  scale_color_manual(values = c("Cell Density" = "#003366")) +
+  scale_fill_manual(values = c("Dry Cell Weight" = "#FFC325")) +
+  
+  # Add title (optional)
+  ggtitle("3.5g/L NaCl Cell Density and Dry Cell Weight Over Time") +
+  
+  # Theme adjustments
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),  # Remove major grid lines
+    panel.grid.minor = element_blank(),  # Remove minor grid lines
+    panel.background = element_blank(),  # Remove background color
+    legend.position = "top"
+  )
+
+
+
+### 45 gL NaCl
+
+
+time_points <- c(24, 48, 72, 96, 120)
+
+mean_dry_weight_salt45 <- c(3.683333333, 4.12, 5.666666667 ,5.316666667, 4.683333333)
+sd_dry_weight_salt45 <- c(0.005244362, 0.005232667, 0.000945163, 0.000763763, 0.000152753)
+mean_cell_density_salt45 <- c(1.412433333, 1.548266667, 2.155533333, 2.151233333, 2.063733333)
+sd_cell_density_salt45 <- c(1.121420306, 1.046463097, 0.030775369, 0.070771487, 0.101267435)
+
+
+data <- data.frame(time = time_points, 
+                   cell_density_mean = mean_cell_density_salt45, 
+                   cell_density_sd = sd_cell_density_salt45,
+                   dry_weight_mean = mean_dry_weight_salt45,
+                   dry_weight_sd = sd_dry_weight_salt45)
+
+
+# Plotting
+ggplot(data, aes(x = time)) + 
+  # Line plot for cell density with error bars
+  geom_line(aes(y = cell_density_mean, color = "Cell Density"), size = 1) +
+  geom_errorbar(aes(ymin = cell_density_mean - cell_density_sd, ymax = cell_density_mean + cell_density_sd, color = "Cell Density"), width = 5) +
+  geom_point(aes(y = cell_density_mean, color = "Cell Density")) +
+  
+  # Bar plot for dry cell weight with error bars
+  geom_bar(aes(y = dry_weight_mean, fill = "Dry Cell Weight"), stat = "identity", width = 10, alpha = 0.5) +
+  geom_errorbar(aes(ymin = (dry_weight_mean - dry_weight_sd), ymax = (dry_weight_mean + dry_weight_sd), fill = "Dry Cell Weight"), width = 5, alpha = 0.5) +
+  
+  # Axis labels and plot theme
+  labs(x = "Time (hours)", 
+       y = "Cell Density (OD600)", 
+       fill = "Dry Cell Weight", 
+       color = "Cell Density") +
+  scale_y_continuous(
+    sec.axis = sec_axis(~./1, name = "Dry Cell Weight (g/L)", breaks = seq(0, 7, by = 1)), 
+    limits = c(0, 7), 
+    breaks = seq(0, 7, by = 1)  # Set y-axis intervals for cell density
+  ) +
+  
+  # Set x-axis limits and breaks
+  scale_x_continuous(breaks = c(24, 48, 72, 96, 120)) +
+  
+  # Manually set the colors for line and bar plots
+  scale_color_manual(values = c("Cell Density" = "#003366")) +
+  scale_fill_manual(values = c("Dry Cell Weight" = "#FFC325")) +
+  
+  # Add title (optional)
+  ggtitle("4.5g/L NaCl Cell Density and Dry Cell Weight Over Time") +
+  
+  # Theme adjustments
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),  # Remove major grid lines
+    panel.grid.minor = element_blank(),  # Remove minor grid lines
+    panel.background = element_blank(),  # Remove background color
+    legend.position = "top"
+  )
+
+
+### Freeze-dry sonrası
+
+
+concenrations <- c("2.5 g/L NaCl", "2.5 to 4.5 g/L NaCl", "3.5 g/L NaCl", "4.5 g/L NaCl")
+Set1 <- c(0.5665, 0.5842, 0.603, 0.5992)
+Set1_Normalized <- (Set1/160)*1000
+Set2 <- c(0.6053, 0.5592, 0.5549, 0.5614)
+Set2_Normalized <- (Set2/160)*1000
+Set3 <- c(0.5459, 0.5334, 0.525, 0.5382)
+Set3_Normalized <- (Set3/160)*1000
+
+CDW_data <- data.frame(Concentrations=concenrations, Set1=Set1_Normalized, Set2=Set2_Normalized, Set3=Set3_Normalized)
+
+
+concentrations <- c("2.5 g/L NaCl", "2.5 to 4.5 g/L NaCl", "3.5 g/L NaCl", "4.5 g/L NaCl")
+Set1 <- c(0.5665, 0.5842, 0.603, 0.5992)
+Set2 <- c(0.6053, 0.5592, 0.5549, 0.5614)
+Set3 <- c(0.5459, 0.5334, 0.525, 0.5382)
+
+# Normalizing
+Set1_Normalized <- (Set1/160)*1000
+Set2_Normalized <- (Set2/160)*1000
+Set3_Normalized <- (Set3/160)*1000
+
+# Mean and Standard Deviation
+mean_values <- rowMeans(cbind(Set1_Normalized, Set2_Normalized, Set3_Normalized))
+sd_values <- apply(cbind(Set1_Normalized, Set2_Normalized, Set3_Normalized), 1, sd)
+
+# Create Data Frame
+CDW_data <- data.frame(Concentrations=concentrations, Mean=mean_values, SD=sd_values)
+
+# Plot with error bars
+ggplot(CDW_data, aes(x=Concentrations, y=Mean)) +
+  geom_bar(stat="identity", fill="#003366", width=0.5) +
+  geom_errorbar(aes(ymin=Mean-SD, ymax=Mean+SD), width=0.2) +
+  labs(x="Experimemtal Conditions", y="CDW (g/L)") +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),  # Remove major grid lines
+    panel.grid.minor = element_blank(),  # Remove minor grid lines
+    panel.background = element_blank(),  # Remove background color
+    legend.position = "top"
+  )
+
+### Hexane Sonuçları
+
+
+concentrations <- c("2.5%", "2.5%->4.5%", "3.5%", "4.5%")
+CDW <- c(1.297, 1.759, 1.5553, 1.7744)
+CDW_Normalized <- (CDW/480)*1000
+FA_g_L <- c(0.726, 0.723, 0.649, 0.736)
+FA_g_g_CDW <- c(0.273, 0.197, 0.200, 0.199)
+FA_g <- c(0.3533, 0.347, 0.3114, 0.3533)
+
+# Create a data frame
+data <- data.frame(Concentrations=concentrations, CDW=CDW, FA_g_L=FA_g_L, FA_g_g_CDW=FA_g_g_CDW, FA_g=FA_g)
+
+# Bar plot for CDW and oil (g/L)
+library(ggplot2)
+
+ggplot(data, aes(x=Concentrations)) +
+  geom_bar(aes(y=CDW, fill="CDW (g/L)"), stat="identity", position=position_dodge(), width = 0.4) +
+  geom_bar(aes(y=FA_g, fill="Fatty Acid (g)"), stat="identity", position=position_dodge(), width = 0.4) +
+  geom_point(aes(y=FA_g_L, color="Fatty Acid (g/L)"), size=3) +
+  geom_line(aes(y=FA_g_L, color="Fatty Acid (g/L)", group=1)) +
+  geom_point(aes(y=FA_g_g_CDW, color="Fatty Acid to CDW Ratio (g/g)"), size=3) +
+  geom_line(aes(y=FA_g_g_CDW, color="Fatty Acid to CDW Ratio (g/g)", group=1)) +
+  labs(x="Experimental Conditions", y="Grams/Grams per L", title="CDW and Fat Content for Different Salt Concentrations") +
+  scale_fill_manual(name="", values=c("CDW (g/L)"="#021526", "Fatty Acid (g)"="#03346E")) +  # Only CDW color changed
+  scale_color_manual(name="", values=c("Fatty Acid (g/L)"="#6EACDA", "Fatty Acid to CDW Ratio (g/g)"="#E2E2B6")) +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    legend.position = "top",
+    axis.text.x = element_text(angle=45, hjust=1) # Rotate x-axis labels
+  )
+
+
+
+### Analiz Sonuçları
+
+
+concentrations <- c("2.5%", "2.5%->4.5%", "3.5%", "4.5%")
+
+DHA <- c(8.17, 27.57, 41.87, 38.64)
+EPA <- c(1.33, 6.15, 8.19, 7.51)
+Palmitic <-c(8.18, 7, 8.18, 7.25)
+Stearic <- c(77.71, 49.07, 28.73,  26.41)
+
+# Create a data frame
+df <- data.frame(
+  FattyAcid = rep(c("DHA", "EPA", "Palmitic", "Stearic"), each = 4),
+  Concentration = rep(concentrations, times = 2),
+  Composition = c(DHA, EPA, Palmitic, Stearic)
+)
+
+# Load the necessary library (if not already loaded)
+library(ggplot2)
+
+# Create a grouped bar plot
+# Create a grouped bar plot with custom colors and a title
+ggplot(df, aes(x = FattyAcid, y = Composition, fill = Concentration)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  scale_fill_manual(values = c("#240750", "#344C64", "#577B8D", "#57A6A1")) +  # Custom colors
+  labs(x = "Fatty Acid", y = "Composition (%)", fill = "Concentration", title = "LC-MS Analysis Results") +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    legend.position = "top",
+    axis.text.x = element_text(angle = 45, hjust = 1)  # Rotate x-axis labels
+  )
+
+
+
+### Alternatif
+
+# Create a data frame
+df <- data.frame(Concentration = concentrations, DHA = DHA, EPA = EPA)
+
+# Load the necessary library (if not already loaded)
+library(ggplot2)
+
+# Create a grouped bar plot
+ggplot(df, aes(x = Concentration)) +
+  geom_bar(aes(y = DHA, fill = "DHA"), stat = "identity", position = "dodge", width = 0.6) +
+  geom_bar(aes(y = EPA, fill = "EPA"), stat = "identity", position = "dodge", width = 0.6) +
+  labs(x = "Concentration", y = "Value", fill = NULL) +
+  scale_fill_manual(values = c("DHA" = "#003366", "EPA" = "#FFC325")) +
+  theme_minimal()
